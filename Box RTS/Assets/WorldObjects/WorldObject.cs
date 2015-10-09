@@ -92,6 +92,12 @@ public class WorldObject : MonoBehaviour {
             return false;
         }
     }
+    public Bounds GetSelectionBounds()
+    {
+        return selectionBounds;
+    }
+
+
 
     //      ------------     Mouse stuff      -----------
     public virtual void MouseClick(GameObject hitObject, Vector3 hitPoint, Player controller)

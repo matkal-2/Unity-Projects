@@ -13,6 +13,8 @@ public class Building : WorldObject {
 
     // Rally Point
     protected Vector3 rallyPoint;
+    public Texture2D rallyPointImage;
+
 
     protected override void Awake()
     {
@@ -57,7 +59,7 @@ public class Building : WorldObject {
             currentBuildProgress += Time.deltaTime * ResourceManager.BuildSpeed;
             if (currentBuildProgress > maxBuildProgress)
             {
-                if (player) player.AddUnit(buildQueue.Dequeue(), spawnPoint, transform.rotation);
+                if (player) player.AddUnit(buildQueue.Dequeue(), spawnPoint, rallyPoint, transform.rotation);
                 currentBuildProgress = 0.0f;
             }
         }
@@ -104,6 +106,53 @@ public class Building : WorldObject {
     {
         return spawnPoint != ResourceManager.InvalidPosition && rallyPoint != ResourceManager.InvalidPosition;
     }
+
+    public override void SetHoverState(GameObject hoverObject)
+    {
+        base.SetHoverState(hoverObject);
+        //only handle input if owned by a human player and currently selected
+        if (player && player.human && currentlySelected)
+        {
+            if (hoverObject.name == "WorldMap")
+            {
+                if (player.hud.GetPreviousCursorState() == CursorState.RallyPoint) player.hud.SetCursorState(CursorState.RallyPoint);
+            }
+        }
+    }
+
+    public override void MouseClick(GameObject hitObject, Vector3 hitPoint, Player controller)
+    {
+        base.MouseClick(hitObject, hitPoint, controller);
+        //only handle iput if owned by a human player and currently selected
+        if (player && player.human && currentlySelected)
+        {
+            if (hitObject.name == "WorldMap")
+            {
+                if ((player.hud.GetCursorState() == CursorState.RallyPoint || player.hud.GetPreviousCursorState() == CursorState.RallyPoint) && hitPoint != ResourceManager.InvalidPosition)
+                {
+                    SetRallyPoint(hitPoint);
+                }
+            }
+        }
+    }
+
+    public void SetRallyPoint(Vector3 position)
+    {
+        rallyPoint = position;
+        if (player && player.human && currentlySelected)
+        {
+            RallyPoint flag = player.GetComponentInChildren<RallyPoint>();
+            if (flag)
+            {
+                flag.transform.localPosition = rallyPoint;
+                player.hud.PlacedRallyPoint();
+            }
+            
+        }
+    }
+
+
+
 
     // -------  End Rally Point     ------------
 }

@@ -9,6 +9,8 @@ public class Unit : WorldObject
     private Vector3 destination;
     private Quaternion targetRotation;
     public float moveSpeed, rotateSpeed;
+    private GameObject destinationTarget;
+
 
     /*** Game Engine methods, all can be overridden by subclass ***/
 
@@ -68,15 +70,25 @@ public class Unit : WorldObject
     //  -----   Unit MOvement   ------
     public void StartMove(Vector3 destination)
     {
+        destinationTarget = null;
         this.destination = destination;
         targetRotation = Quaternion.LookRotation(destination - transform.position);
         rotating = true;
         moving = false;
     }
 
+    public void StartMove(Vector3 destination, GameObject destinationTarget)
+    {
+        StartMove(destination);
+        this.destinationTarget = destinationTarget;
+    }
+
+
+
     private void TurnToTarget()
     {
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed);
+        CalculateBounds();
         //sometimes it gets stuck exactly 180 degrees out in the calculation and does nothing, this check fixes that
         Quaternion inverseTargetRotation = new Quaternion(-targetRotation.x, -targetRotation.y, -targetRotation.z, -targetRotation.w);
         if (transform.rotation == targetRotation || transform.rotation == inverseTargetRotation)
@@ -84,8 +96,44 @@ public class Unit : WorldObject
             rotating = false;
             moving = true;
         }
-        CalculateBounds();
+        
+        if (destinationTarget) CalculateTargetDestination();
+
     }
+
+    private void CalculateTargetDestination()
+    {
+        //calculate number of unit vectors from unit centre to unit edge of bounds
+        Vector3 originalExtents = selectionBounds.extents;
+        Vector3 normalExtents = originalExtents;
+        normalExtents.Normalize();
+        float numberOfExtents = originalExtents.x / normalExtents.x;
+        int unitShift = Mathf.FloorToInt(numberOfExtents);
+
+        //calculate number of unit vectors from target centre to target edge of bounds
+        WorldObject worldObject = destinationTarget.GetComponent<WorldObject>();
+        if (worldObject) originalExtents = worldObject.GetSelectionBounds().extents;
+        else originalExtents = new Vector3(0.0f, 0.0f, 0.0f);
+        normalExtents = originalExtents;
+        normalExtents.Normalize();
+        numberOfExtents = originalExtents.x / normalExtents.x;
+        int targetShift = Mathf.FloorToInt(numberOfExtents);
+
+        //calculate number of unit vectors between unit centre and destination centre with bounds just touching
+        int shiftAmount = targetShift + unitShift;
+
+        //calculate direction unit needs to travel to reach destination in straight line and normalize to unit vector
+        Vector3 origin = transform.position;
+        Vector3 direction = new Vector3(destination.x - origin.x, 0.0f, destination.z - origin.z);
+        direction.Normalize();
+
+        //destination = center of destination - number of unit vectors calculated above
+        //this should give us a destination where the unit will not quite collide with the target
+        //giving the illusion of moving to the edge of the target and then stopping
+        for (int i = 0; i < shiftAmount; i++) destination -= direction;
+        destination.y = destinationTarget.transform.position.y;
+    }
+
 
     private void MakeMove()
     {
