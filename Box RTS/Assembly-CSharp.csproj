@@ -38,10 +38,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>D:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>D:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +56,7 @@
      <Compile Include="Assets\WorldObjects\Building\Barrack\Barrack.cs" />
      <Compile Include="Assets\WorldObjects\Building\Building.cs" />
      <Compile Include="Assets\WorldObjects\Building\Buildings.cs" />
+     <Compile Include="Assets\WorldObjects\Building\TownHall\TownHall.cs" />
      <Compile Include="Assets\WorldObjects\Resources\OreDeposit\Ore.cs" />
      <Compile Include="Assets\WorldObjects\Resources\OreDeposit\OreDeposit.cs" />
      <Compile Include="Assets\WorldObjects\Resources\Resources.cs" />
@@ -67,16 +68,16 @@
      <Compile Include="Assets\WorldObjects\Unit\Worker\Worker.cs" />
      <Compile Include="Assets\WorldObjects\WorldObject.cs" />
  <Reference Include="UnityEngine.UI">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Cecil">
- <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
+ <HintPath>D:/Program Files/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
- <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+ <HintPath>D:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -41,20 +41,26 @@ public class HUD : MonoBehaviour {
     // Rally Point And other small button
     public Texture2D smallButtonHover, smallButtonClick;
 
+    // Health and Ore bars
+    public Texture2D healthy, damaged, critical;
+    public Texture2D[] resourceHealthBars;
+
+
+
     
 
 
 	// Use this for initialization
 	void Start () {
         player = transform.root.GetComponent<Player>();
-        ResourceManager.StoreSelectBoxItems(selectBoxSkin);
+        ResourceManager.StoreSelectBoxItems(selectBoxSkin, healthy, damaged, critical);
         SetCursorState(CursorState.Select);
         resourceValues = new Dictionary<ResourceType, int>();
         resourceLimits = new Dictionary<ResourceType, int>();
         resourceImages = new Dictionary<ResourceType, Texture2D>();
 
         // Unit creatin variable
-        buildAreaHeight = ORDER_BAR_HEIGHT - BUILD_IMAGE_HEIGHT/4;
+        buildAreaHeight = ORDER_BAR_HEIGHT - BUILD_IMAGE_HEIGHT/2;
 
         for (int i = 0; i < resources.Length; i++)
         {
@@ -73,6 +79,19 @@ public class HUD : MonoBehaviour {
                 default: break;
             }
         }
+        Dictionary<ResourceType, Texture2D> resourceHealthBarTextures = new Dictionary<ResourceType, Texture2D>();
+        for (int i = 0; i < resourceHealthBars.Length; i++)
+        {
+            switch (resourceHealthBars[i].name)
+            {
+                case "ore":
+                    resourceHealthBarTextures.Add(ResourceType.Ore, resourceHealthBars[i]);
+                    break;
+                default: break;
+            }
+        }
+        ResourceManager.SetResourceHealthBarTextures(resourceHealthBarTextures);
+
 	}
 	
 	// Update is called once per frame
@@ -267,7 +286,7 @@ public class HUD : MonoBehaviour {
         buttons.active.background = smallButtonClick;
         GUI.skin.button = buttons;
         int leftPos =  BUTTON_SPACING;
-        int topPos = buildAreaHeight - BUILD_IMAGE_HEIGHT / 2;
+        int topPos = buildAreaHeight ;
         int width = BUILD_IMAGE_WIDTH / 2;
         int height = BUILD_IMAGE_HEIGHT / 2;
         if (building.hasSpawnPoint())

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
 
 namespace BOXRTS
 {
@@ -24,7 +26,15 @@ namespace BOXRTS
         // Mouse Selecting GUI skin
         private static GUISkin selectBoxSkin;
         public static GUISkin SelectBoxSkin { get { return selectBoxSkin; } }
-        public static void StoreSelectBoxItems(GUISkin skin) { selectBoxSkin = skin; }
+
+        public static void StoreSelectBoxItems(GUISkin skin, Texture2D healthy, Texture2D damaged, Texture2D critical)
+        {
+            selectBoxSkin = skin;
+            healthyTexture = healthy;
+            damagedTexture = damaged;
+            criticalTexture = critical;
+        }
+
         public static int SelectionBoxDepth { get { return 1; } }
         public static int GUIBarDepth { get { return 0; } }
         private static Bounds invalidBounds = new Bounds(new Vector3(-99999, -99999, -99999), new Vector3(0, 0, 0));
@@ -63,5 +73,25 @@ namespace BOXRTS
         {
             return gameObjectList.GetBuildImage(name);
         }
+
+        // Health and Ore bars
+        private static Texture2D healthyTexture, damagedTexture, criticalTexture;
+        public static Texture2D HealthyTexture { get { return healthyTexture; } }
+        public static Texture2D DamagedTexture { get { return damagedTexture; } }
+        public static Texture2D CriticalTexture { get { return criticalTexture; } }
+        public static Texture2D GetResourceHealthBar(ResourceType resourceType)
+        {
+            if (resourceHealthBarTextures != null && resourceHealthBarTextures.ContainsKey(resourceType)) return resourceHealthBarTextures[resourceType];
+            return null;
+        }
+        public static void SetResourceHealthBarTextures(Dictionary<ResourceType, Texture2D> images)
+        {
+            resourceHealthBarTextures = images;
+        }
+        private static Dictionary<ResourceType, Texture2D> resourceHealthBarTextures;
+
+
+
+
     }
 }

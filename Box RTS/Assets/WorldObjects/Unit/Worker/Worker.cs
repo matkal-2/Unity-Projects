@@ -11,6 +11,9 @@ public class Worker : Unit
     private ResourceType harvestType;
     private Resource resourceDeposit;
     public Building resourceStore;
+    public float collectionAmount, depositAmount;
+    private float currentDeposit = 0.0f;
+
 
 
 
@@ -126,11 +129,35 @@ public class Worker : Unit
 
     private void Collect()
     {
+        float collect = collectionAmount * Time.deltaTime;
+        //make sure that the harvester cannot collect more than it can carry
+        if (currentLoad + collect > capacity) collect = capacity - currentLoad;
+        resourceDeposit.Remove(collect);
+        currentLoad += collect;
     }
 
     private void Deposit()
     {
+        ResourceType depositType = harvestType;
+        if (harvestType == ResourceType.Ore) depositType = ResourceType.Money;
+        player.AddResource(depositType, Mathf.FloorToInt(currentLoad));
+        currentLoad = 0;
     }
+
+    protected override void DrawSelectionBox(Rect selectBox)
+    {
+        base.DrawSelectionBox(selectBox);
+        float percentFull = currentLoad / capacity;
+        float maxHeight = selectBox.height - 4;
+        float height = maxHeight * percentFull;
+        float leftPos = selectBox.x + selectBox.width - 7;
+        float topPos = selectBox.y + 2 + (maxHeight - height);
+        float width = 5;
+        Texture2D resourceBar = ResourceManager.GetResourceHealthBar(harvestType);
+        if (resourceBar) GUI.DrawTexture(new Rect(leftPos, topPos, width, height), resourceBar);
+    }
+
+
 
 
 }

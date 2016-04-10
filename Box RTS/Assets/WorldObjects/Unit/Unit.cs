@@ -70,8 +70,9 @@ public class Unit : WorldObject
     //  -----   Unit MOvement   ------
     public void StartMove(Vector3 destination)
     {
-        destinationTarget = null;
+        
         this.destination = destination;
+        destinationTarget = null;
         targetRotation = Quaternion.LookRotation(destination - transform.position);
         rotating = true;
         moving = false;
@@ -95,9 +96,10 @@ public class Unit : WorldObject
         {
             rotating = false;
             moving = true;
+            if (destinationTarget) CalculateTargetDestination();
         }
         
-        if (destinationTarget) CalculateTargetDestination();
+        
 
     }
 
