@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using BOXRTS;
-using System.Collections.Generic;
 
 public class Unit : WorldObject
 {
@@ -11,7 +10,6 @@ public class Unit : WorldObject
     private Quaternion targetRotation;
     public float moveSpeed, rotateSpeed;
     private GameObject destinationTarget;
-    public Texture2D[] resourceHealthBars;
 
 
     /*** Game Engine methods, all can be overridden by subclass ***/
@@ -21,26 +19,9 @@ public class Unit : WorldObject
         base.Awake();
     }
 
-    public virtual void SetBuilding(Building creator)
-    {
-        //specific initialization for a unit can be specified here
-    }
-
     protected override void Start()
     {
         base.Start();
-        Dictionary<ResourceType, Texture2D> resourceHealthBarTextures = new Dictionary<ResourceType, Texture2D>();
-        for (int i = 0; i < resourceHealthBars.Length; i++)
-        {
-            switch (resourceHealthBars[i].name)
-            {
-                case "ore":
-                    resourceHealthBarTextures.Add(ResourceType.Ore, resourceHealthBars[i]);
-                    break;
-                default: break;
-            }
-        }
-        ResourceManager.SetResourceHealthBarTextures(resourceHealthBarTextures);
     }
 
     protected override void Update()
@@ -87,8 +68,9 @@ public class Unit : WorldObject
 
 
     //  -----   Unit MOvement   ------
-    public virtual void StartMove(Vector3 destination)
+    public void StartMove(Vector3 destination)
     {
+        
         this.destination = destination;
         destinationTarget = null;
         targetRotation = Quaternion.LookRotation(destination - transform.position);

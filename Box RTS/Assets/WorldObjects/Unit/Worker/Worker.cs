@@ -14,12 +14,6 @@ public class Worker : Unit
     public float collectionAmount, depositAmount;
     private float currentDeposit = 0.0f;
 
-    public int buildSpeed;
-
-    private Building currentProject;
-    private bool building = false;
-    private float amountBuilt = 0.0f;
-
 
 
 
@@ -29,7 +23,6 @@ public class Worker : Unit
     {
         base.Start();
         harvestType = ResourceType.Unknown;
-        actions = new string[] { "Refinery", "WarFactory" };
     }
 
     protected override void Update()
@@ -44,7 +37,7 @@ public class Worker : Unit
                 if (harvesting)
                 {
                     Collect();
-                    if (currentLoad >= capacity)
+                    if (currentLoad >= capacity || resourceDeposit.isEmpty())
                     {
                         //make sure that we have a whole number to avoid bugs
                         //caused by floating point numbers
@@ -164,30 +157,7 @@ public class Worker : Unit
         if (resourceBar) GUI.DrawTexture(new Rect(leftPos, topPos, width, height), resourceBar);
     }
 
-    public override void SetBuilding(Building project)
-    {
-        base.SetBuilding(project);
-        resourceStore = project;
-        currentProject = project;
-        StartMove(currentProject.transform.position, currentProject.gameObject);
-        building = true;
-    }
 
-    public override void PerformAction(string actionToPerform)
-    {
-        base.PerformAction(actionToPerform);
-        CreateBuilding(actionToPerform);
-    }
 
-    public override void StartMove(Vector3 destination)
-    {
-        base.StartMove(destination);
-        amountBuilt = 0.0f;
-    }
-
-    private void CreateBuilding(string buildingName)
-    {
-
-    }
 
 }

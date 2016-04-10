@@ -278,7 +278,9 @@ public class HUD : MonoBehaviour {
         //  -----------  End of unit creating -----------
         // --------  Rally Point    ------------
     private void DrawStandardBuildingOptions(Building building)
-    {        
+    {
+        
+
         GUIStyle buttons = new GUIStyle();
         buttons.hover.background = smallButtonHover;
         buttons.active.background = smallButtonClick;

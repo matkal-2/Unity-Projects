@@ -27,6 +27,14 @@ namespace BOXRTS
         private static GUISkin selectBoxSkin;
         public static GUISkin SelectBoxSkin { get { return selectBoxSkin; } }
 
+        public static void StoreSelectBoxItems(GUISkin skin, Texture2D healthy, Texture2D damaged, Texture2D critical)
+        {
+            selectBoxSkin = skin;
+            healthyTexture = healthy;
+            damagedTexture = damaged;
+            criticalTexture = critical;
+        }
+
         public static int SelectionBoxDepth { get { return 1; } }
         public static int GUIBarDepth { get { return 0; } }
         private static Bounds invalidBounds = new Bounds(new Vector3(-99999, -99999, -99999), new Vector3(0, 0, 0));
@@ -37,16 +45,6 @@ namespace BOXRTS
 
         // Game Object List
         private static GameObjectList gameObjectList;
-
-        public static void StoreSelectBoxItems(GUISkin skin, Texture2D healthy, Texture2D damaged, Texture2D critical)
-        {
-            selectBoxSkin = skin;
-            healthyTexture = healthy;
-            damagedTexture = damaged;
-            criticalTexture = critical;
-        }
-
-
         public static void SetGameObjectList(GameObjectList objectList)
         {
             gameObjectList = objectList;
@@ -92,6 +90,8 @@ namespace BOXRTS
         }
         private static Dictionary<ResourceType, Texture2D> resourceHealthBarTextures;
 
-                
+
+
+
     }
 }
