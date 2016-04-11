@@ -47,10 +47,12 @@ public class Unit : WorldObject
             {
                 float x = hitPoint.x;
                 //makes sure that the unit stays on top of the surface it is on
-                float y = hitPoint.y + player.SelectedObject.transform.position.y;
+                float y = hitPoint.y +player.SelectedObject.transform.position.y;
                 float z = hitPoint.z;
+                Debug.Log("x pos: " + x.ToString() + ", y pos: " + y.ToString() + ", z pos: " + z.ToString(), gameObject);
                 Vector3 destination = new Vector3(x, y, z);
                 StartMove(destination);
+                attacking = false;
             }
         }
     }
@@ -68,17 +70,18 @@ public class Unit : WorldObject
 
 
     //  -----   Unit MOvement   ------
-    public void StartMove(Vector3 destination)
+    public virtual void StartMove(Vector3 destination)
     {
         
         this.destination = destination;
         destinationTarget = null;
+        destination.y = transform.position.y;
         targetRotation = Quaternion.LookRotation(destination - transform.position);
         rotating = true;
         moving = false;
     }
 
-    public void StartMove(Vector3 destination, GameObject destinationTarget)
+    public virtual void StartMove(Vector3 destination, GameObject destinationTarget)
     {
         StartMove(destination);
         this.destinationTarget = destinationTarget;
@@ -139,11 +142,20 @@ public class Unit : WorldObject
 
     private void MakeMove()
     {
+        transform.position = new Vector3(transform.position.x, ResourceManager.GetWorldMap().getTileHeight(Mathf.FloorToInt(transform.position.x / 2), Mathf.FloorToInt(transform.position.z / 2)), transform.position.z);
+        destination.y = ResourceManager.GetWorldMap().getTileHeight(Mathf.FloorToInt(transform.position.x / 2), Mathf.FloorToInt(transform.position.z / 2));
         transform.position = Vector3.MoveTowards(transform.position, destination, Time.deltaTime * moveSpeed);
-        if (transform.position == destination) moving = false;
+        if (transform.position == destination)
+        {
+            moving = false;
+            movingIntoPosition = false;
+        }
         CalculateBounds();
     }
 
+    public virtual void SetBuilding(Building project)
+    {
+    }
 
 
     

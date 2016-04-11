@@ -1,21 +1,23 @@
 Base path: D:/Program Files/Unity/Editor/Data
-Pipe name: \\.\pipe\UnityShaderCompiler-64bit-1-18488
+Pipe name: \\.\pipe\UnityShaderCompiler-64bit-1-34832
 Cmd: getPlatforms
-Cmd: preprocess
-  insize=1000 outsize=1282 ok=1
 Cmd: compileSnippet
-  api=4 type=0 insize=7541 outsize=3508 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=1
+  api=4 type=0 insize=3409 outsize=2484 kw= pd= ok=1
 Cmd: compileSnippet
-  api=4 type=1 insize=7541 outsize=10154 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF pd= ok=1
+  api=4 type=1 insize=3409 outsize=1249 kw= pd= ok=1
 Cmd: compileSnippet
-  api=4 type=0 insize=4284 outsize=2753 kw=POINT SHADOWS_OFF pd= ok=1
+  api=4 type=0 insize=70382 outsize=3541 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON pd= ok=1
 Cmd: compileSnippet
-  api=4 type=1 insize=4284 outsize=6149 kw=POINT SHADOWS_OFF pd= ok=1
+  api=4 type=1 insize=70382 outsize=12137 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON pd= ok=1
 Cmd: compileSnippet
-  api=4 type=0 insize=6643 outsize=3508 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF pd= ok=1
+  api=4 type=0 insize=7364 outsize=3037 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON pd= ok=1
 Cmd: compileSnippet
-  api=4 type=1 insize=6643 outsize=2346 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF DYNAMICLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF pd= ok=1
+  api=4 type=1 insize=7364 outsize=10593 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON pd= ok=1
 Cmd: compileSnippet
-  api=4 type=0 insize=3586 outsize=2484 kw= pd= ok=1
+  api=4 type=0 insize=4107 outsize=2753 kw=POINT SHADOWS_OFF pd= ok=1
 Cmd: compileSnippet
-  api=4 type=1 insize=3586 outsize=1314 kw= pd= ok=1
+  api=4 type=1 insize=4107 outsize=6165 kw=POINT SHADOWS_OFF pd= ok=1
+Unhandled exception: Readfile from pipe failed. GLE=The pipe has been ended.
+
+
+Quitting shader compiler process

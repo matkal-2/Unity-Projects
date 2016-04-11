@@ -9,7 +9,7 @@ namespace BOXRTS
     {
         // Camera stuff
         public static int ScrollWidth { get { return 2; } }
-        public static float ScrollSpeed { get { return 25; } }
+        public static float ScrollSpeed { get { return 50; } }
         public static float RotateAmount { get { return 10; } }
         public static float RotateSpeed { get { return 100; } }
         public static float MinCameraHeight { get { return 10; } }
@@ -64,6 +64,11 @@ namespace BOXRTS
             return gameObjectList.GetWorldObject(name);
         }
 
+        public static WorldMap GetWorldMap()
+        {
+            return gameObjectList.GetWorldMap();
+        }
+
         public static GameObject GetPlayerObject()
         {
             return gameObjectList.GetPlayerObject();
@@ -90,6 +95,19 @@ namespace BOXRTS
         }
         private static Dictionary<ResourceType, Texture2D> resourceHealthBarTextures;
 
+        public static bool MenuOpen { get; set; }
+
+        private static float buttonHeight = 40;
+        private static float headerHeight = 32, headerWidth = 256;
+        private static float textHeight = 25, padding = 10;
+        public static float PauseMenuHeight { get { return headerHeight + 2 * buttonHeight + 4 * padding; } }
+        public static float MenuWidth { get { return headerWidth + 2 * padding; } }
+        public static float ButtonHeight { get { return buttonHeight; } }
+        public static float ButtonWidth { get { return (MenuWidth - 3 * padding) / 2; } }
+        public static float HeaderHeight { get { return headerHeight; } }
+        public static float HeaderWidth { get { return headerWidth; } }
+        public static float TextHeight { get { return textHeight; } }
+        public static float Padding { get { return padding; } }
 
 
 

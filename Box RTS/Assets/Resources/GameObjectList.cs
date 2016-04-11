@@ -8,6 +8,7 @@ public class GameObjectList : MonoBehaviour {
     public GameObject[] units;
     public GameObject[] worldObjects;
     public GameObject player;
+    public WorldMap worldMap;
     private static bool created = false;
 
 	// Use this for initialization
@@ -67,6 +68,11 @@ public class GameObjectList : MonoBehaviour {
     public GameObject GetPlayerObject()
     {
         return player;
+    }
+
+    public WorldMap GetWorldMap()
+    {
+        return worldMap;
     }
 
     public Texture2D GetBuildImage(string name)

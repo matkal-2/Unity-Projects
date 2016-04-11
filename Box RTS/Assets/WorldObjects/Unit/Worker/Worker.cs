@@ -14,7 +14,11 @@ public class Worker : Unit
     public float collectionAmount, depositAmount;
     private float currentDeposit = 0.0f;
 
+    public int buildSpeed;
 
+    private Building currentProject;
+    private bool building = false;
+    private float amountBuilt = 0.0f;
 
 
     /*** Game Engine methods, all can be overridden by subclass ***/
@@ -23,6 +27,7 @@ public class Worker : Unit
     {
         base.Start();
         harvestType = ResourceType.Unknown;
+        actions = new string[] { "Barrack", "TownHall" };
     }
 
     protected override void Update()
@@ -30,6 +35,17 @@ public class Worker : Unit
         base.Update();
         if (!rotating && !moving)
         {
+            if (building && currentProject && currentProject.UnderConstruction())
+            {
+                amountBuilt += buildSpeed * Time.deltaTime;
+                int amount = Mathf.FloorToInt(amountBuilt);
+                if (amount > 0)
+                {
+                    amountBuilt -= amount;
+                    currentProject.Construct(amount);
+                    if (!currentProject.UnderConstruction()) building = false;
+                }
+            }
             if (harvesting || emptying)
             {
                 Pick[] picks = GetComponentsInChildren<Pick>();
@@ -85,7 +101,22 @@ public class Worker : Unit
 
     public override void MouseClick(GameObject hitObject, Vector3 hitPoint, Player controller)
     {
-        base.MouseClick(hitObject, hitPoint, controller);
+
+        bool doBase = true;
+        //only handle input if owned by a human player and currently selected
+        if (player && player.human && currentlySelected && hitObject && hitObject.name != "WorldMap")
+        {
+            Building building = hitObject.transform.parent.GetComponent<Building>();
+            if (building)
+            {
+                if (building.UnderConstruction())
+                {
+                    SetBuilding(building);
+                    doBase = false;
+                }
+            }
+        }
+        if (doBase) base.MouseClick(hitObject, hitPoint, controller);
         //only handle input if owned by a human player
         if (player && player.human)
         {
@@ -103,6 +134,7 @@ public class Worker : Unit
             }
             else StopHarvest();
         }
+        
     }
 
     /* Private Methods */
@@ -124,7 +156,7 @@ public class Worker : Unit
 
     private void StopHarvest()
     {
-
+        harvesting = false;
     }
 
     private void Collect()
@@ -157,6 +189,33 @@ public class Worker : Unit
         if (resourceBar) GUI.DrawTexture(new Rect(leftPos, topPos, width, height), resourceBar);
     }
 
+    private void CreateBuilding(string buildingName)
+    {
+        Vector3 buildPoint = new Vector3(transform.position.x, transform.position.y, transform.position.z + 10);
+        if (player) player.createBuilding(buildingName, buildPoint, this, playingArea);
+    }
+
+
+    public override void SetBuilding(Building project)
+    {
+        base.SetBuilding(project);
+        currentProject = project;
+        StartMove(currentProject.transform.position, currentProject.gameObject);
+        building = true;
+    }
+
+    public override void PerformAction(string actionToPerform)
+    {
+        base.PerformAction(actionToPerform);
+        CreateBuilding(actionToPerform);
+    }
+
+    public override void StartMove(Vector3 destination)
+    {
+        base.StartMove(destination);
+        amountBuilt = 0.0f;
+        building = false;
+    }
 
 
 

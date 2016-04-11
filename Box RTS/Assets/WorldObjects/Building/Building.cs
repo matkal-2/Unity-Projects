@@ -15,6 +15,9 @@ public class Building : WorldObject {
     protected Vector3 rallyPoint;
     public Texture2D rallyPointImage;
 
+    private bool needsBuilding = false;
+
+    private int sizeX, sizeZ;
 
     protected override void Awake()
     {
@@ -44,6 +47,18 @@ public class Building : WorldObject {
     protected override void OnGUI()
     {
         base.OnGUI();
+        if (needsBuilding) DrawBuildProgress();
+    }
+
+    private void DrawBuildProgress()
+    {
+        GUI.skin = ResourceManager.SelectBoxSkin;
+        Rect selectBox = WorkManager.CalculateSelectionBox(selectionBounds, playingArea);
+        //Draw the selection box around the currently selected object, within the bounds of the main draw area
+        GUI.BeginGroup(playingArea);
+        CalculateCurrentHealth(0.5f, 0.99f);
+        DrawHealthBar(selectBox, "Building ...");
+        GUI.EndGroup();
     }
 
     //  ------  Unit Production -----
@@ -128,7 +143,7 @@ public class Building : WorldObject {
         {
             if (hitObject.name == "WorldMap")
             {
-                if ((player.hud.GetCursorState() == CursorState.RallyPoint || player.hud.GetPreviousCursorState() == CursorState.RallyPoint) && hitPoint != ResourceManager.InvalidPosition)
+                if (hitPoint != ResourceManager.InvalidPosition)
                 {
                     SetRallyPoint(hitPoint);
                 }
@@ -151,8 +166,30 @@ public class Building : WorldObject {
         }
     }
 
-
-
-
     // -------  End Rally Point     ------------
+
+    public void StartConstruction()
+    {
+        CalculateBounds();
+        needsBuilding = true;
+        hitPoints = 0;
+    }
+
+    public bool UnderConstruction()
+    {
+        return needsBuilding;
+    }
+
+    public void Construct(int amount)
+    {
+        hitPoints += amount;
+        if (hitPoints >= maxHitPoints)
+        {
+            hitPoints = maxHitPoints;
+            needsBuilding = false;
+            RestoreMaterials();
+            SetTeamColor();
+        }
+    }
+
 }

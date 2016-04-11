@@ -45,6 +45,8 @@ public class HUD : MonoBehaviour {
     public Texture2D healthy, damaged, critical;
     public Texture2D[] resourceHealthBars;
 
+    public GUISkin playerDetailsSkin;
+
 
 
     
@@ -104,9 +106,24 @@ public class HUD : MonoBehaviour {
             DrawInfoBar();
             DrawQueBar();
             DrawMouseCursor();
+            DrawPlayerDetails();
             
         }
 	}
+
+    private void DrawPlayerDetails()
+    {
+        GUI.skin = playerDetailsSkin;
+        GUI.BeginGroup(new Rect(0, 0, Screen.width, Screen.height));
+        float height = ResourceManager.TextHeight;
+        float leftPos = ResourceManager.Padding;
+        float topPos = Screen.height - height - ResourceManager.Padding;
+        float minWidth = 0, maxWidth = 0;
+        string playerName = PlayerManager.GetPlayerName();
+        playerDetailsSkin.GetStyle("label").CalcMinMaxWidth(new GUIContent(playerName), out minWidth, out maxWidth);
+        GUI.Label(new Rect(leftPos, topPos, maxWidth, height), playerName);
+        GUI.EndGroup();
+    }
 
     //  -------     Drwaing bars        -------------
     private void DrawQueBar() 
@@ -267,7 +284,7 @@ public class HUD : MonoBehaviour {
             float topPos = 0;
             if (i == 0)
             {
-                Debug.Log("Build progress: "+buildPercentage.ToString(), gameObject);
+                //Debug.Log("Build progress: "+buildPercentage.ToString(), gameObject);
                 //shrink the build mask on the item currently being built to give an idea of progress
                 topPos += height * buildPercentage;
                 height *= (1 - buildPercentage);
@@ -342,7 +359,6 @@ public class HUD : MonoBehaviour {
     //  -------     Mouse Cursor stuff  ----------
     private void DrawMouseCursor()
     {
-
         bool panSide = activeCursorState != CursorState.PanRight && activeCursorState != CursorState.PanUp && activeCursorState != CursorState.PanDown && activeCursorState != CursorState.PanLeft;
         if (!MouseInBounds() && panSide)
         {

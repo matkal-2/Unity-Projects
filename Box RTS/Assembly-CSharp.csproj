@@ -46,32 +46,49 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\BoxRTS\Enums.cs" />
+     <Compile Include="Assets\BoxRTS\PlayerManager.cs" />
      <Compile Include="Assets\BoxRTS\ResourceManager.cs" />
      <Compile Include="Assets\BoxRTS\WorkManager.cs" />
+     <Compile Include="Assets\Menu\Scripts\MainMenu.cs" />
+     <Compile Include="Assets\Menu\Scripts\Menu.cs" />
+     <Compile Include="Assets\Menu\Scripts\PauseMenu.cs" />
+     <Compile Include="Assets\Menu\Scripts\SelectPlayerMenu.cs" />
+     <Compile Include="Assets\Middlewares\JsonNetSample\JsonNetSample.cs" />
      <Compile Include="Assets\Player\HUD\HUD.cs" />
      <Compile Include="Assets\Player\Player.cs" />
      <Compile Include="Assets\Player\RallyPoint\RallyPoint.cs" />
      <Compile Include="Assets\Player\UserInput.cs" />
      <Compile Include="Assets\Resources\GameObjectList.cs" />
+     <Compile Include="Assets\SelectionList\SelectionList.cs" />
+     <Compile Include="Assets\WorldMap\BitMap\BitMapDecoder.cs" />
+     <Compile Include="Assets\WorldMap\MapTile.cs" />
+     <Compile Include="Assets\WorldMap\WorldMap.cs" />
      <Compile Include="Assets\WorldObjects\Building\Barrack\Barrack.cs" />
      <Compile Include="Assets\WorldObjects\Building\Building.cs" />
      <Compile Include="Assets\WorldObjects\Building\Buildings.cs" />
      <Compile Include="Assets\WorldObjects\Building\TownHall\TownHall.cs" />
+     <Compile Include="Assets\WorldObjects\Projectile.cs" />
      <Compile Include="Assets\WorldObjects\Resources\OreDeposit\Ore.cs" />
      <Compile Include="Assets\WorldObjects\Resources\OreDeposit\OreDeposit.cs" />
      <Compile Include="Assets\WorldObjects\Resources\Resources.cs" />
+     <Compile Include="Assets\WorldObjects\TeamColor.cs" />
      <Compile Include="Assets\WorldObjects\Unit\Soldier\Soldier.cs" />
+     <Compile Include="Assets\WorldObjects\Unit\Soldier\SoldierProjectile.cs" />
      <Compile Include="Assets\WorldObjects\Unit\Unit.cs" />
      <Compile Include="Assets\WorldObjects\Unit\Units.cs" />
      <Compile Include="Assets\WorldObjects\Unit\Worker\Hammer.cs" />
      <Compile Include="Assets\WorldObjects\Unit\Worker\Pick.cs" />
      <Compile Include="Assets\WorldObjects\Unit\Worker\Worker.cs" />
      <Compile Include="Assets\WorldObjects\WorldObject.cs" />
+     <None Include="Assets\link.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>D:/Users/Public/Documents/Unity Projects/Unity-Projects/Box RTS/Assets/Middlewares/JsonNet/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Cecil">
  <HintPath>D:/Program Files/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
